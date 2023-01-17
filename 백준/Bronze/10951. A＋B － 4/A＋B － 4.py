@@ -1,6 +1,4 @@
-while True:
-    try:
-        a, b = map(int, input().split())
-        print(a + b)
-    except EOFError:
-        break
+import sys
+
+for input in sys.stdin:
+    print(sum(map(int, input.split())))
