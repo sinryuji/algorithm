@@ -1,12 +1,9 @@
+import sys
+
 n = int(input())
-list = [input() for _ in range(n)]
-for line in list:
-    sum = 0
-    stack = 1;
-    for ch in line:
-        if ch == 'O':
-            sum += stack
-            stack += 1
-        else:
-            stack = 1
-    print(sum)
+for _ in range(n):
+    l = sys.stdin.readline().rstrip().split('X')
+    s = 0
+    for i in range(len(l)):
+        s += sum(range(len(l[i]) + 1))
+    print(s)
