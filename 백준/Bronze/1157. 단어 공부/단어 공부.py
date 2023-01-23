@@ -1,7 +1,6 @@
 l = [0 for _ in range(26)]
-for c in input():
-    if c.islower():
-        c = c.upper()
+str = input().upper()
+for c in str:
     l[ord(c) - ord('A')] += 1
 m = max(l)
 cnt = 0
