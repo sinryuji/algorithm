@@ -1,13 +1,10 @@
-l = [0 for _ in range(26)]
 str = input().upper()
-for c in str:
-    l[ord(c) - ord('A')] += 1
-m = max(l)
-cnt = 0
-for i in l:
-    if m == i:
-        cnt += 1
-if (cnt > 1):
-    print('?')
-else:
-    print(chr(l.index(m) + ord('A')))
+max_cnt = 0
+for i in range(26):
+    cnt = str.count(chr(i + 65))
+    if max_cnt < cnt:
+        max_cnt = cnt
+        max_chr = chr(i + 65)
+    elif max_cnt == cnt:
+        max_chr = '?'
+print(max_chr)
