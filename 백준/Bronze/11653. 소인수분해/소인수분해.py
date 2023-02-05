@@ -1,10 +1,8 @@
 n = int(input())
 
-while n > 1:
-    x = 2
-    while n % x != 0:
-        x += 1
-        if x == n:
-            break
-    print(x)
-    n = n / x
+for i in range(2, int(n ** 0.5) + 2):
+        while n % i == 0:
+            print(i)
+            n //= i
+if n != 1:
+    print(n)
