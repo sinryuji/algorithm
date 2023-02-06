@@ -1,20 +1,21 @@
 m = int(input())
 n = int(input())
 
-def isPrime(n):
-    if n == 1:
-        return False
-    for i in range(2, n):
-        if (n % i == 0):
-            return False
-    return True
-
-l = []
-for i in range(m, n + 1):
-    if isPrime(i):
-        l.append(i)
-if len(l) == 0:
+n += 1
+a = [True] * n
+for i in range(2, int(n ** 0.5) + 1):
+    if a[i]:
+        for j in range(i * 2, n, i):
+            a[j] = False
+sum = 0
+for i in range(m, n):
+    if i > 1 and a[i]:
+        sum += i
+if sum == 0:
     print(-1)
 else:
-    print(sum(l))
-    print(min(l))
+    print(sum)
+    for i in range(m, n):
+        if i > 1 and a[i]:
+            print(i)
+            break
