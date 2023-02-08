@@ -8,7 +8,5 @@ for _ in range(n):
             paper[i][j] = 1
 ret = 0
 for line in paper:
-    for i in line:
-        if i == 1:
-            ret += 1
+    ret += sum(line)
 print(ret)
