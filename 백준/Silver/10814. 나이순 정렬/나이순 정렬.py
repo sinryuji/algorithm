@@ -1,12 +1,5 @@
-n = int(input())
-member_lst = []
+import sys
 
-for i in range(n):
-    age, name = map(str, input().split())
-    age = int(age)
-    member_lst.append((age, name))
-
-member_lst.sort(key = lambda x : x[0])	## (age, name)에서 age만 비교
-
-for i in member_lst:
-    print(i[0], i[1])
+data = sys.stdin.readlines()[1:]
+data.sort(key = lambda x: int(x.split()[0]))
+sys.stdout.write("".join(data))
