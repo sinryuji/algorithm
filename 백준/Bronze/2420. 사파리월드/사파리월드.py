@@ -1,2 +1,1 @@
-x, y = map(int, input().split())
-print(abs(x - y))
+print(abs(eval('-'.join(input().split()))))
