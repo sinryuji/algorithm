@@ -1,5 +1,5 @@
 n, m = map(int, input().split())
-card = list(map(int, input().split()))
+card = sorted(list(map(int, input().split())), reverse = True)
 ret = 0
 for i in range(len(card) - 2):
     for j in range(i + 1, len(card) - 1):
@@ -7,4 +7,5 @@ for i in range(len(card) - 2):
             sum = card[i] + card[j] + card[k]
             if sum <= m and sum > ret:
                 ret = sum
+                break
 print(ret)
