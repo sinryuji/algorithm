@@ -7,6 +7,4 @@ for i in range(n):
     for j in range(n):
         if i != j and person[i][0] < person[j][0] and person[i][1] < person[j][1]:
             rank += 1
-    person[i].append(rank)
-for i in person:
-    print(i[2], end = ' ')
+    sys.stdout.write(str(rank) + ' ')
