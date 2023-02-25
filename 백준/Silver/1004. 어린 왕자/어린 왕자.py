@@ -1,5 +1,5 @@
-def get_distance(x1, y1, x2, y2):
-    return ((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5
+import sys
+input = sys.stdin.readline
 
 t = int(input())
 for _ in range(t):
@@ -8,11 +8,7 @@ for _ in range(t):
     planets = []
     cnt = 0
     for _ in range(n):
-        planets.append(list(map(int, input().split())))
-    for planet in planets:
-        start_dis = get_distance(x1, y1, planet[0], planet[1])
-        end_dis = get_distance(x2, y2, planet[0], planet[1])
-        if (start_dis < planet[2] and end_dis > planet[2]) or \
-            (start_dis > planet[2] and end_dis < planet[2]):
-            cnt+= 1
+        cx, cy, r = map(int, input().split())
+        if ((cx - x1) ** 2 + (cy - y1) ** 2 - r ** 2) * ((cx - x2) ** 2 + (cy - y2) ** 2 - r ** 2) < 0:
+            cnt += 1
     print(cnt)
