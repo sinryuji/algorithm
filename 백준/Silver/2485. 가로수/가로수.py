@@ -7,9 +7,7 @@ def gcd(a, b):
 
 n = int(sys.stdin.readline())
 trees = [int(i) for i in sys.stdin.readlines()]
-gap = []
-for i in range(len(trees) - 1):
-    gap.append(trees[i + 1] - trees[i])
+gap = [trees[i + 1] - trees[i] for i in range(len(trees) - 1)]
 x = gcd(gap[0], gap[1])
 for i in range(2, len(gap)):
     x = gcd(x, gap[2])
