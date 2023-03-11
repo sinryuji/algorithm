@@ -13,7 +13,4 @@ for i in range(len(trees) - 1):
 x = gcd(gap[0], gap[1])
 for i in range(2, len(gap)):
     x = gcd(x, gap[2])
-ret = 0
-for i in range(len(trees) - 1):
-    ret += (trees[i + 1] - trees[i] - x) // x
-print(ret)
+print((trees[-1] - trees[0]) // x + 1 - len(trees))
