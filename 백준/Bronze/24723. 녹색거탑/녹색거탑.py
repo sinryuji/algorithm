@@ -1,1 +1,3 @@
-print(2 ** int(input()))
+import sys
+
+print(2 ** int(sys.stdin.readline()))
