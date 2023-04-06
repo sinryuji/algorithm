@@ -4,17 +4,19 @@ input = sys.stdin.readline
 
 n = int(input())
 q = deque()
+ret = []
 for _ in range(n):
     cmd = input().rstrip()
     if cmd == "pop":
-        print(-1 if len(q) == 0 else q.popleft())
+        ret.append('-1' if len(q) == 0 else q.popleft())
     elif cmd == "size":
-        print(len(q))
+        ret.append(str(len(q)))
     elif cmd == "empty":
-        print(1 if len(q) == 0 else 0)
+        ret.append('1' if len(q) == 0 else '0')
     elif cmd == "front":
-        print(-1 if len(q) == 0 else q[0])
+        ret.append('-1' if len(q) == 0 else q[0])
     elif cmd == "back":
-        print(-1 if len(q) == 0 else q[-1])
+        ret.append('-1' if len(q) == 0 else q[-1])
     else:
-        q.append(int(cmd.split()[1]))
+        q.append(cmd.split()[1])
+sys.stdout.write('\n'.join(ret))
