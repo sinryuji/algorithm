@@ -1,20 +1,18 @@
 import sys
-input = sys.stdin.readline
 
-n = int(input())
-i = 1
+n = int(sys.stdin.readline())
+seq = [int(i) for i in sys.stdin.readlines()]
 stack = []
 ret = []
-for _ in range(n):
-    num = int(input())
-    while len(stack) == 0 or stack[-1] != num and i <= num:
+i = 1
+
+for num in seq:
+    while i <= num:
         stack.append(i)
         ret.append('+')
         i += 1
-    while len(stack) > 0 and stack[-1] == num:
-        stack.pop()
-        ret.append('-')
-if len(stack) == 0:
-    print(*ret, sep = '\n')
-else:
-    print("NO")
+    if stack.pop() != num:
+        ret = ['NO']
+        break
+    ret.append('-')
+print(*ret, sep = '\n')
