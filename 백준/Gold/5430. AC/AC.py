@@ -1,29 +1,28 @@
 import sys
-from collections import deque
 input = sys.stdin.readline
 
 t = int(input())
 for _ in range(t):
-    flag = True
-    rev = False
-    p = input().rstrip()
+    p = list(map(len, input().rstrip().replace('RR', '').split('R')))
     n = int(input())
-    arr = deque(input().rstrip().strip('[]').split(','))
-    if arr[0] == '':
-        arr.pop()
-    for i in p:
-        if i == 'R':
-            rev = not rev
-        else:
-            if len(arr) == 0:
-                print('error')
-                flag = False
-                break
-            if not rev:
-                arr.popleft()
-            else:
-                arr.pop()
-    if flag:
-        if rev:
-            arr.reverse()
-        print('[', ','.join(arr), ']', sep = '')
+    if n == 0:
+        input()
+        arr = []
+    else:
+        arr = input().strip('[]\n').split(',')
+
+    front = sum(p[0::2])
+    try:
+        back = sum(p[1::2])
+    except:
+        back = 0
+
+    if front + back > n:
+        print('error')
+        continue
+    else:
+        arr = arr[front:(n - back)]
+    
+    if (len(p) + 1) % 2 == 1:
+        arr.reverse()
+    print('[', ','.join(arr), ']', sep = '')
