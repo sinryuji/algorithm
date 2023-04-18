@@ -1,10 +1,13 @@
 n = int(input())
 a = list(map(int, input().split()))
-dp = [0] * n
+s = [a[0]]
 
-for i in range(n):
-    for j in range(i):
-        if a[i] > a[j] and dp[i] < dp[j]:
-            dp[i] = dp[j]
-    dp[i] += 1
-print(max(dp))
+for i in a[1:]:
+    if s[-1] < i:
+        s.append(i)
+    else:
+        for j,v in enumerate(s):
+            if i <= v:
+                s[j] = i
+                break
+print(len(s))
