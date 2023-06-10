@@ -1,6 +1,10 @@
-import datetime
-
 a, b, c = map(int, input().split())
 d = int(input())
-now = datetime.datetime(2023, 6, 10, a, b, c) + datetime.timedelta(seconds=d)
-print(now.hour, now.minute, now.second)
+c += d
+if c >= 60:
+    b += c // 60
+    c %= 60
+if b >= 60:
+    a += b // 60
+    b %= 60
+print(a % 24, b, c)
