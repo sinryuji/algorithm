@@ -16,7 +16,7 @@ for _ in range(m):
     elif cmd[0] == "remove":
         s.discard(cmd[1])
     elif cmd[0] == "check":
-        print(1 if cmd[1] in s else 0)
+        sys.stdout.write("1\n" if cmd[1] in s else "0\n")
     elif cmd[0] == "toggle":
         if cmd[1] in s: s.discard(cmd[1])
         else: s.add(cmd[1])
