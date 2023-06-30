@@ -10,8 +10,7 @@ last_char = boom[-1]
 for c in str:
     s.append(c)
     if last_char == c and ''.join(s[-boom_len:]) == boom:
-        for _ in range(boom_len):
-            s.pop()
+        del s[-boom_len:]
             
 if len(s) == 0:
     print("FRULA")
