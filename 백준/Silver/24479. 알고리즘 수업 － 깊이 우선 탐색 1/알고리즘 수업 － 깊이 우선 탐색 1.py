@@ -1,22 +1,27 @@
-def dfs(t):
-    global cnt
-    visited[t] = cnt
-    line[t].sort()
-    for i in line[t]:
-        if visited[i] == 0:
-            cnt += 1
-            dfs(i)
-
 import sys
-sys.setrecursionlimit(150000)
-N, M, R = map(int, sys.stdin.readline().split())
-line = [[] for _ in range(N+1)]
-visited = [0]*(N+1)  # 저장값
-cnt = 1
-for _ in range(M):
-    a, b = map(int, sys.stdin.readline().split())
-    line[a].append(b)  # 양 방향 간선
-    line[b].append(a)  # 양 방향 간선
-dfs(R)
-for i in range(1, N+1):
+input = sys.stdin.readline
+
+def dfs(start):
+    cnt = 1
+    stack = [start]
+    while stack:
+        v = stack.pop()
+        if visited[v] == 0:
+            visited[v] = cnt
+            cnt += 1
+            for i in sorted(graph[v], reverse = True):
+                stack.append(i)
+
+n, m, r = map(int, input().split())
+vertices = [i for i in range(1, n + 1)]
+graph = [[] for i in range(n + 1)]
+for _ in range(m):
+    a, b = map(int, input().split())
+    graph[a].append(b)
+    graph[b].append(a)
+visited = [0] * (n + 1)
+
+dfs(r)
+
+for i in range(1, n + 1):
     print(visited[i])
