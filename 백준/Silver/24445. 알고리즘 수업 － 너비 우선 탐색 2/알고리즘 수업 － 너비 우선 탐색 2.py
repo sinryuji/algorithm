@@ -3,15 +3,14 @@ from collections import deque
 input = sys.stdin.readline
 
 def bfs(start):
-    queue = deque([start])
     cnt = 1
-    visited[start] = cnt
+    queue = deque([start])
     while queue:
         v = queue.popleft()
-        for i in sorted(graph[v], reverse = True):
-            if visited[i] == 0:
-                cnt += 1
-                visited[i] = cnt
+        if visited[v] == 0:
+            visited[v] = cnt
+            cnt += 1
+            for i in sorted(graph[v], reverse = True):
                 queue.append(i)
 
 n, m, r = map(int, input().split())
