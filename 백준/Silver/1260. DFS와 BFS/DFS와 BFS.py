@@ -1,22 +1,23 @@
 import sys
-from collections import deque
 input = sys.stdin.readline
 
-def dfs(start):
-    visited_dfs.append(start)
-    for i in sorted(lines[start]):
-        if i not in visited_dfs:
+def dfs(n):
+    dfs_list.append(n)
+    visited_dfs[n] = True
+    for i in sorted(lines[n]):
+        if not visited_dfs[i]:
             dfs(i)
 
-def bfs(start):
-    queue = deque([start])
-    visited_bfs.append(start)
+def bfs(n):
+    queue = [n]
+    visited_bfs[n] = True
     while queue:
-        v = queue.popleft()
+        v = queue.pop(0)
+        bfs_list.append(v)
         for i in sorted(lines[v]):
-            if i not in visited_bfs:
+            if not visited_bfs[i]:
                 queue.append(i)
-                visited_bfs.append(i)
+                visited_bfs[i] = True
             
 n, m, v = map(int, input().split())
 vertices = [i for i in range(1, n + 1)]
@@ -25,11 +26,13 @@ for _ in range(m):
     a, b = map(int, input().split())
     lines[a].append(b)
     lines[b].append(a)
-visited_dfs = []
-visited_bfs = []
+visited_dfs = [False] * (n + 1)
+visited_bfs = [False] * (n + 1)
+dfs_list = []
+bfs_list = []
 
 dfs(v)
 bfs(v)
 
-print(*visited_dfs)
-print(*visited_bfs)
+print(*dfs_list)
+print(*bfs_list)
