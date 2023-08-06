@@ -1,20 +1,16 @@
-def bfs(a, b):
-    cnt = 1
-    queue = [[a, b]]
-    map_[b][a] = 0
-    while queue:
-        x, y = queue.pop(0)
-        for i in range(4):
-            nx = x + dx[i]
-            ny = y + dy[i]
-            if nx < 0 or nx >= n or ny < 0 or ny >= n:
-                continue
-            if map_[ny][nx] == 1:
-                map_[ny][nx] = 0
-                queue.append([nx, ny])
-                cnt += 1
-    return cnt
-                
+def dfs(x, y):
+    global cnt
+    if x < 0 or x >= n or y < 0 or y >= n:
+        return False
+    if map_[y][x] == 0:
+        return False
+    map_[y][x] = 0
+    cnt += 1
+    for i in range(4):
+        nx = x + dx[i]
+        ny = y + dy[i]
+        dfs(nx, ny)
+    return True
 
 n = int(input())
 map_ = [list(map(int, list(input()))) for _ in range(n)]
@@ -24,8 +20,9 @@ answer = []
 
 for y in range(n):
     for x in range(n):
-        if map_[y][x] == 1:
-            answer.append(bfs(x, y))
+        cnt = 0
+        if dfs(x, y) == True:
+            answer.append(cnt)
 
 answer.sort()
 print(len(answer))
