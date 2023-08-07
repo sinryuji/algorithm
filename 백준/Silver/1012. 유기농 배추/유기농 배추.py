@@ -1,21 +1,22 @@
 import sys
 input = sys.stdin.readline
-sys.setrecursionlimit(5000)
 
 dx = [1, -1, 0, 0]
 dy = [0, 0, 1, -1]
 
-def dfs(x, y):
-    if x < 0 or x >= m or y < 0 or y >= n:
-        return False
-    if graph[y][x] == 0:
-        return False
-    graph[y][x] = 0
-    for i in range(4):
-        nx = x + dx[i]
-        ny = y + dy[i]
-        dfs(nx, ny)
-    return True
+def bfs(a, b):
+    queue = [[a, b]]
+    graph[b][a] == 0
+    while queue:
+        x, y = queue.pop(0)
+        for i in range(4):
+            nx = x + dx[i];
+            ny = y + dy[i];
+            if nx < 0 or nx >= m or ny < 0 or ny >= n:
+                continue
+            if graph[ny][nx] == 1:
+                graph[ny][nx] = 0
+                queue.append([nx, ny])
 
 for _ in range(int(input())):
     m, n, k = map(int, input().split())
@@ -26,6 +27,7 @@ for _ in range(int(input())):
     cnt = 0
     for y in range(n):
         for x in range(m):
-            if dfs(x, y) == True:
+            if graph[y][x] == 1:
+                bfs(x, y)
                 cnt += 1
     print(cnt)
