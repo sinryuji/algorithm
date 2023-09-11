@@ -3,7 +3,7 @@ import heapq
 input = sys.stdin.readline
 INF = sys.maxsize
 
-def dijkstra(start, end):
+def dijkstra(start):
     dist = [INF] * (N + 1)
     heapq.heappush(heap, (start, 0))
     dist[start] = 0
@@ -20,7 +20,7 @@ def dijkstra(start, end):
                 dist[next_] = total_cost
                 heapq.heappush(heap, (next_, total_cost))
                 
-    return dist[end]
+    return dist
 
 N, E = map(int, input().split())
 graph = [[] for _ in range(N + 1)]
@@ -31,7 +31,10 @@ for _ in range(E):
 v1, v2 = map(int, input().split())
 heap = []
     
-path1 = dijkstra(1, v1) + dijkstra(v1, v2) + dijkstra(v2, N)
-path2 = dijkstra(1, v2) + dijkstra(v2, v1) + dijkstra(v1, N)
+v1_dist = dijkstra(v1)
+v2_dist = dijkstra(v2)
+
+path1 = v1_dist[1] + v1_dist[v2] + v2_dist[N]
+path2 = v2_dist[1] + v1_dist[v2] + v1_dist[N]
 
 print(-1 if path1 >= INF or path2 >= INF else min(path1, path2))
