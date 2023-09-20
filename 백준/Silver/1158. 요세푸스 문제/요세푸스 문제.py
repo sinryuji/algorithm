@@ -1,14 +1,10 @@
-from collections import deque
-
 N, K = map(int, input().split())
-stack = deque([i for i in range(1, N + 1)])
+nums = [i for i in range(1, N + 1)]
 answer = []
+i = 0
     
-while stack:
-    for _ in range(K - 1):
-        stack.append(stack.popleft())
-    answer.append(stack.popleft())
-    
-print('<', end='')
-print(*answer, sep=', ', end='')
-print('>', end='')
+while nums:
+    i = (i + K - 1) % len(nums)
+    answer.append(nums.pop(i))
+
+print('<' + ', '.join(map(str, answer)) + '>')
