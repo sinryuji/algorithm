@@ -2,27 +2,16 @@ name = input()
 
 characters = dict()
 for char in name:
-    if characters.get(char, 0) == 0:
-        characters[char] = 1
-    else:
-        characters[char] += 1
+    characters.setdefault(char, 0)
+    characters[char] += 1
         
-keys = sorted(characters.keys())
-odd_char = ""
-for key in keys:
-    if characters.get(key) % 2 == 1:
-        if odd_char == "":
-            odd_char = key
-        else:
+answer, odd_char = '', ''
+for char, cnt in sorted(characters.items()):
+    if cnt % 2:
+        if odd_char != '':
             print("I'm Sorry Hansoo")
-            exit(0)
-
-answer = ""
-tmp = ""
-for key in keys:
-    tmp += key * (characters[key] // 2)
-answer += tmp
-answer += odd_char
-answer += tmp[::-1]
-
-print(answer)
+            break
+        odd_char = char
+    answer += char * (cnt // 2)
+else:
+    print(answer + odd_char + answer[::-1])
