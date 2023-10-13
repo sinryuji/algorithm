@@ -1,10 +1,18 @@
 n = int(input())
-dp = [0, 1]
+arr = [0 if i ** 0.5 % 1 else 1 for i in range(n + 1)]
 
-for i in range(2, n + 1):
-    min_val = 1e9
-    for j in range(1, int(i ** 0.5) + 1):
-        min_val = min(min_val, dp[i - j ** 2])
-    dp.append(min_val + 1)
+ans = 4
+for i in range(1, int(n ** 0.5) + 1):
+    if arr[n]:
+        ans = 1
+        break
+    elif arr[n - i ** 2]:
+        ans = 2
+        break
+    else:
+        for j in range(1, int((n - i ** 2) ** 0.5) + 1):
+            if arr[(n - i ** 2) - j ** 2]:
+                ans = 3
+                break
 
-print(dp[n])
+print(ans)
