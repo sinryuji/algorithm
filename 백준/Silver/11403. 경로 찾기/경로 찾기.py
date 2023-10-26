@@ -1,19 +1,13 @@
 from collections import deque
 
-def bfs(start, end):
+def bfs(start, visited):
     queue = deque([start])
-    visited = []
-    cnt = 0
     while queue:
         n = queue.popleft()
-        if n == end and cnt > 0:
-            return True
         for i in graph[n]:
-            if i not in visited:
-                visited.append(i)
+            if visited[i] == 0:
+                visited[i] = 1
                 queue.append(i)
-                cnt += 1
-    return False
 
 N = int(input())
 graph = [[] for _ in range(N)]
@@ -24,14 +18,12 @@ for i in range(N):
         if l[j] == 1:
             graph[i].append(j)
 
-answer = [[] for _ in range(N)]
+answer = []
 
 for i in range(N):
-    for j in range(N):
-        if bfs(i, j):
-            answer[i].append(1)
-        else:
-            answer[i].append(0)
+    visited = [0] * N
+    bfs(i, visited)
+    answer.append(' '.join(map(str, visited)))
 
 for i in answer:
-    print(*i)
+    print(i)
