@@ -13,8 +13,7 @@ int main() {
         std::cin >> v[i];
     }
 
-    std::sort(v.begin(), v.end());
-    std::cout << v[0];
+    std::cout << *std::min_element(v.begin(), v.end());
     std::cout << " ";
-    std::cout << v[N - 1];
+    std::cout << *std::max_element(v.begin(), v.end());
  }
