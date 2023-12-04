@@ -1,4 +1,6 @@
 from collections import deque
+import sys
+input = sys.stdin.readline
 
 N = int(input())
 graph = [[] for _ in range(N + 1)]
@@ -15,8 +17,7 @@ while queue:
     x = queue.popleft()
     for i in graph[x]:
         if answer[i] == 0:
-            answer[i] = x
+            answer[i] = str(x)
             queue.append(i)
 
-for i in range(2, N + 1):
-    print(answer[i])
+sys.stdout.write('\n'.join(answer[2:]))
