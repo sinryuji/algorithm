@@ -1,27 +1,36 @@
-import sys
-from itertools import combinations
-input = sys.stdin.readline
+def close(a,b): # 요구사항인 M개 만큼 치킨집을 폐업해보자
+    global distance_min
+    if a > len(chicken):
+        return
+    if b == M:
+        distance_all = 0
+        for r, c in house:
+            distance = float('inf')
+            for i in val:
+                rr, cc = chicken[i]
+                distance = min(distance, abs(rr-r)+abs(cc-c))
+            distance_all += distance
+        distance_min = min(distance_min, distance_all)
+        return
 
-N, M = map(int, input().split())
-graph = [list(map(int, input().split())) for _ in range(N)]
-answer = 999999
-house = []
-chick = []
+    val.append(a)
+    close(a+1, b+1)
+    val.pop()
+    close(a+1,b)
+
+import sys
+N, M = map(int, sys.stdin.readline().split())
+city = [list(map(int, sys.stdin.readline().split())) for _ in range(N)]
+chicken, house, val = [], [], []
 
 for i in range(N):
     for j in range(N):
-        if graph[i][j] == 1:
-            house.append([i, j])
-        elif graph[i][j] == 2:
-            chick.append([i, j])
+        if city[i][j] == 1:
+            house.append([i,j])
+        elif city[i][j] == 2:
+            chicken.append([i,j])
 
-for chi in combinations(chick, M):
-    temp = 0
-    for h in house:
-        chi_len = 999
-        for j in range(M):
-            chi_len = min(chi_len, abs(h[0] - chi[j][0]) + abs(h[1] - chi[j][1]))
-        temp += chi_len
-    answer = min(answer, temp)
-
-print(answer)
+distance_min = float('inf')
+close(0,0)
+print(distance_min)
+#출처: https://edder773.tistory.com/42 [개발하는 차리의 공부 일기:티스토리]
