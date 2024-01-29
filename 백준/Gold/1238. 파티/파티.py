@@ -3,38 +3,36 @@ import heapq
 input = sys.stdin.readline
 INF = int(1e9)
 
-def dijkstra(start):
-    global N
-    distance = [INF] * (N + 1)
-    distance[start] = 0
-    queue = [(start, distance[start])]
-
-    while queue:
-        curr, dist = heapq.heappop(queue)
-        if distance[curr] < dist:
-            continue
-        for n, n_dist in graph[curr]:
-            cost = dist + n_dist
-            if distance[n] > cost:
-                distance[n] = cost
-                heapq.heappush(queue, (n, cost))
-
-    return distance
-
 N, M, X = map(int, input().split())
-graph = [[] for _ in range(N + 1)]
+graph1 = [[] for _ in range(N + 1)]
+graph2 = [[] for _ in range(N + 1)]
+dist1 = [INF] * (N + 1)
+dist2 = [INF] * (N + 1)
 for _ in range(M):
     a, b, c = map(int, input().split())
-    graph[a].append((b, c))
+    graph1[a].append((b, c))
+    graph2[b].append((a, c))
 
-dists = [[]]
+heap = [(X, 0)]
+dist1[X] = 0
+while heap:
+    curr, dist = heapq.heappop(heap)
+    if dist1[curr] < dist:
+        continue
+    for n, n_dist in graph1[curr]:
+        if dist1[n] > dist + n_dist:
+            dist1[n] = dist + n_dist
+            heapq.heappush(heap, (n, dist1[n]))
 
-for i in range(1, N + 1):
-    dists.append(dijkstra(i))
+heap = [(X, 0)]
+dist2[X] = 0
+while heap:
+    curr, dist = heapq.heappop(heap)
+    if dist2[curr] < dist:
+        continue
+    for n, n_dist in graph2[curr]:
+        if dist2[n] > dist + n_dist:
+            dist2[n] = dist + n_dist
+            heapq.heappush(heap, (n, dist2[n]))
 
-answer = 0
-
-for i in range(1, N + 1):
-    answer = max(answer, dists[i][X] + dists[X][i])
-
-print(answer)
+print(max(dist1[i] + dist2[i] for i in range(1, N + 1)))
