@@ -9,9 +9,9 @@ def dijkstra(start):
     
     while heap:
         wei, now = heapq.heappop(heap)
-        if distance[now] < wei:
+        if visited[now]:
             continue
-            
+        visited[now] = True
         for w, next_node in graph[now]:
             next_wei = w + wei
             if next_wei < distance[next_node]:
@@ -23,6 +23,7 @@ k = int(input())
 graph = [[] for _ in range(v + 1)]
 heap = []
 distance = [INF] * (v + 1)
+visited = [False] * (v + 1)
 for _ in range(e):
     a, b, c = map(int, input().split())
     graph[a].append((c, b))
