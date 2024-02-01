@@ -4,16 +4,16 @@ input = sys.stdin.readline
 INF = int(1e9)
 
 def dijkstra(start):
-    heap = [(start, distance[start])]
+    heap = [(distance[start], start)]
     while heap:
-        curr, dist = heapq.heappop(heap)
+        dist, curr = heapq.heappop(heap)
         if distance[curr] < dist:
             continue
         for n, n_dist in graph[curr]:
             if distance[n] > dist + n_dist:
                 distance[n] = dist + n_dist
                 prev_node[n] = curr
-                heapq.heappush(heap, (n, distance[n]))
+                heapq.heappush(heap, (distance[n], n))
 
 n, m = int(input()), int(input())
 graph = [[] for _ in range(n + 1)]
