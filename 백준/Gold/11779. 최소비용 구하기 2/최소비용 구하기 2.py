@@ -5,12 +5,14 @@ INF = int(1e9)
 
 def dijkstra(start, end):
     heap = [(distance[start], start)]
+    visited = set()
     while heap:
         dist, curr = heapq.heappop(heap)
-        if distance[curr] < dist:
+        if curr in visited:
             continue
         if curr == end:
             break
+        visited.add(curr)
         for n, n_dist in graph[curr]:
             if distance[n] > dist + n_dist:
                 distance[n] = dist + n_dist
