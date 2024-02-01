@@ -3,12 +3,14 @@ import heapq
 input = sys.stdin.readline
 INF = int(1e9)
 
-def dijkstra(start):
+def dijkstra(start, end):
     heap = [(distance[start], start)]
     while heap:
         dist, curr = heapq.heappop(heap)
         if distance[curr] < dist:
             continue
+        if curr == end:
+            break
         for n, n_dist in graph[curr]:
             if distance[n] > dist + n_dist:
                 distance[n] = dist + n_dist
@@ -27,7 +29,7 @@ distance[start] = 0
 prev_node = [0] * (n + 1)
 path = [end]
 
-dijkstra(start)
+dijkstra(start, end)
 now = end
 while now != start:
     now = prev_node[now]
