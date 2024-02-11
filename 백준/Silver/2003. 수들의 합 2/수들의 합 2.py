@@ -4,16 +4,20 @@ input = sys.stdin.readline
 N, M = map(int, input().split())
 nums = list(map(int, input().split()))
 
-s, e = 0, 1
+l, r = 0, 1
 ans = 0
-while e <= N:
-    sum_ = sum(nums[s:e])
-    if sum_ == M:
-        ans += 1
-        e += 1
-    elif sum_ < M:
-        e += 1
+s = nums[0]
+while True:
+    if s < M:
+        if r < N:
+            s += nums[r]
+            r += 1
+        else:
+            break
     else:
-        s += 1
+        if s == M:
+            ans += 1
+        s -= nums[l]
+        l += 1
 
 print(ans)
