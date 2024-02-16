@@ -24,9 +24,14 @@ edges.sort(key=lambda x : x[2])
 ans = 0
 
 for a, b, dist in edges:
-    if find(a) == find(b):
+    a = find(a)
+    b = find(b)
+    if a == b:
         continue
     ans += dist
-    union(a, b)
+    if a < b:
+        parent[b] = a
+    else:
+        parent[a] = b
 
 print(ans)
