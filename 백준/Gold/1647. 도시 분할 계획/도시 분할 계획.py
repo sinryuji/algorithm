@@ -15,6 +15,7 @@ def solve():
     parent = [i for i in range(N + 1)]
     sum_ = 0
     max_ = 0
+    count = 0
 
     for a, b, dist in edges:
         a, b = find(a), find(b)
@@ -24,7 +25,7 @@ def solve():
             else:
                 parent[b] = a
             sum_ += dist
-            max_ = max(max_, dist)
+            max_ = dist
 
     print(sum_ - max_)
 
