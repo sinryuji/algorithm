@@ -4,20 +4,16 @@ input = sys.stdin.readline
 N, M = map(int, input().split())
 nums = list(map(int, input().split()))
 
-l, r = 0, 1
+l, r = 0, 0
 ans = 0
-s = nums[0]
-while True:
-    if s < M:
-        if r < N:
-            s += nums[r]
-            r += 1
-        else:
-            break
-    else:
-        if s == M:
-            ans += 1
-        s -= nums[l]
-        l += 1
+s = 0
+
+for l in range(N):
+    while s < M and r < N:
+        s += nums[r]
+        r += 1
+    if s == M:
+        ans += 1
+    s -= nums[l]
 
 print(ans)
