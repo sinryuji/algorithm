@@ -2,16 +2,16 @@ import sys
 input = sys.stdin.readline
 
 
-def check_row(r, c, num):
+def check_row(r, num):
     for x in range(9):
-        if c != x and num == sdoku[r][x]:
+        if num == sdoku[r][x]:
             return False
     return True
 
 
-def check_col(r, c, num):
+def check_col(c, num):
     for x in range(9):
-        if r != x and num == sdoku[x][c]:
+        if num == sdoku[x][c]:
             return False
     return True
 
@@ -21,20 +21,12 @@ def check_three(r, c, num):
     nc = (c // 3) * 3
     for x in range(3):
         for y in range(3):
-            if r != nr + x and c != nc + y and num == sdoku[nr + x][nc + y]:
+            if num == sdoku[nr + x][nc + y]:
                 return False
     return True
 
 
 def dfs(depth, r, c, num):
-    if depth > 0:
-        if not check_row(r, c, num):
-            return
-        if not check_col(r, c, num):
-            return
-        if not check_three(r, c, num):
-            return
-
     if depth >= len(zero_p):
         for i in range(9):
             print(''.join(map(str, sdoku[i])))
@@ -42,9 +34,10 @@ def dfs(depth, r, c, num):
 
     nr, nc = zero_p[depth]
     for i in range(1, 10):
-        sdoku[nr][nc] = i
-        dfs(depth + 1, nr, nc, i)
-        sdoku[nr][nc] = 0
+        if check_row(nr, i) and check_col(nc, i) and check_three(nr, nc, i):
+            sdoku[nr][nc] = i
+            dfs(depth + 1, nr, nc, i)
+            sdoku[nr][nc] = 0
 
 
 sdoku = []
