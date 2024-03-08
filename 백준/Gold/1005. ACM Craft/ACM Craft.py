@@ -4,8 +4,7 @@ from collections import deque
 input = sys.stdin.readline
 
 
-def topology_sort():
-    global N
+def topology_sort(N, indegree, dp, seq, times):
     q = deque()
 
     for i in range(1, N + 1):
@@ -21,8 +20,9 @@ def topology_sort():
             if indegree[i] == 0:
                 q.append(i)
 
+    return dp
 
-for _ in range(int(input())):
+def solve():
     N, K = map(int, input().split())
     times = [0] + list(map(int, input().split()))
     seq = [[] for _ in range(N + 1)]
@@ -34,6 +34,10 @@ for _ in range(int(input())):
         indegree[b] += 1
     W = int(input())
 
-    topology_sort()
+    dp = topology_sort(N, indegree, dp, seq, times)
 
     print(dp[W])
+
+
+for _ in range(int(input())):
+    solve()
