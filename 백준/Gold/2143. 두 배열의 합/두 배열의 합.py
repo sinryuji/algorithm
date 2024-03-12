@@ -34,11 +34,17 @@ B = list(map(int, input().split()))
 
 psa, psb = [], []
 for i in range(n):
-    for j in range(i + 1, n + 1):
-        psa.append(sum(A[i:j]))
+    s = A[i]
+    psa.append(s)
+    for j in range(i + 1, n):
+        s += A[j]
+        psa.append(s)
 for i in range(m):
-    for j in range(i + 1, m + 1):
-        psb.append(sum(B[i:j]))
+    s = B[i]
+    psb.append(s)
+    for j in range(i + 1, m):
+        s += B[j]
+        psb.append(s)
 
 psa.sort()
 psb.sort()
