@@ -1,26 +1,19 @@
-import sys
-input = sys.stdin.readline
+N, M = map(int, input().split())
+apps = list(map(int, input().split()))
+deact = list(map(int, input().split()))
 
-n, m = map(int, input().split())
-apps = [0] + list(map(int, input().split()))
-costs = [0] + list(map(int, input().split()))
-s = sum(costs)
-dp = [[0] * (s + 1) for _ in range(n + 1)]
-answer = s
+# dp[비용][메모리]
+dp = [[0 for _ in range(10000+1)] for _ in range(N+1)]
+for i in range(1, N+1): # i 개의 앱 비활성화
+    for w in range(10000+1): # 사용 가능한 비활성화에 필요한 비용
+        if deact[i-1] <= w: # i-1 개의(리스트 시작 인덱스 = 1) 앱을 비활성화 시킬 수 있다면 
+        	# i개 비활성화로 확보된 메모리 = i-1 개 비활성화 + i-1 번 째 앱 메모리 (i-1 번째 비활성화)
+            # 						    i-1 번째 비활성화 X 중 최댓값
+            dp[i][w] = max(apps[i-1] + dp[i-1][w-deact[i-1]], dp[i-1][w])
+        else: # 비활성화 불가
+            dp[i][w] = dp[i-1][w]
 
-for i in range(1, n + 1):
-    byte = apps[i]
-    cost = costs[i]
-            
-    for j in range(1, s + 1):
-        if j < cost:
-            dp[i][j] = dp[i - 1][j]
-        else:
-            dp[i][j] = max(dp[i - 1][j], byte + dp[i - 1][j - cost])
-        if dp[i][j] >= m:
-            answer = min(answer, j)
-
-if m != 0:
-    print(answer)
-else:
-    print(answer)
+for i, c in enumerate(dp[-1]): # 
+    if c >= M: # 처음으로 필요한 메모리보다 확보된 양이 많아진다면 출력
+        print(i)
+        break
