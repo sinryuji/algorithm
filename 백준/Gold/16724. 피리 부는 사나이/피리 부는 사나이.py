@@ -2,21 +2,10 @@ import sys
 
 input = sys.stdin.readline
 
-
-def get_next(x, y):
-    if board[y][x] == 'U':
-        return (x, y - 1)
-    elif board[y][x] == 'D':
-        return (x, y + 1)
-    elif board[y][x] == 'L':
-        return (x - 1, y)
-    else:
-        return (x + 1, y)
-
-
 def dfs(x, y):
     visited[y][x] = True
-    nx, ny = get_next(x, y)
+    dx, dy = nexts[board[y][x]]
+    nx, ny = x + dx, y + dy
     cycle.append((x, y))
 
     if visited[ny][nx]:
@@ -31,6 +20,12 @@ def dfs(x, y):
 N, M = map(int, input().split())
 board = [list(input().rstrip()) for _ in range(N)]
 visited = [[False] * M for _ in range(N)]
+nexts = {
+    'U': (0, -1),
+    'D': (0, 1),
+    'R': (1, 0),
+    'L': (-1, 0)
+}
 answer = 0
 
 for y in range(N):
