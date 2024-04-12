@@ -18,7 +18,7 @@ find(remove)
 
 leef = 0
 for i in range(N):
-    if i not in parent and parent[i] != -2:
+    if parent[i] != -2 and i not in parent:
         leef += 1
 
 print(leef)
