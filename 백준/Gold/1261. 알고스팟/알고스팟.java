@@ -18,7 +18,7 @@ public class Main {
     static int M;
 
     public static int bfs() {
-        PriorityQueue<Node> q = new PriorityQueue<>(Comparator.comparingInt(o -> o.cnt));
+        Deque<Node> q = new ArrayDeque<>();
         int[] dx = {1, -1, 0, 0};
         int[] dy = {0, 0, 1, -1};
 
@@ -26,7 +26,7 @@ public class Main {
         visited[0][0] = true;
 
         while (!q.isEmpty()) {
-            Node curNode = q.poll();
+            Node curNode = q.pop();
 
             if (curNode.x == M - 1 && curNode.y == N - 1) {
                 return curNode.cnt;
@@ -42,9 +42,9 @@ public class Main {
 
                 visited[ny][nx] = true;
                 if (board[ny][nx] == 0) {
-                    q.offer(new Node(nx, ny, curNode.cnt));
+                    q.addFirst(new Node(nx, ny, curNode.cnt));
                 } else {
-                    q.offer(new Node(nx, ny, curNode.cnt + 1));
+                    q.addLast(new Node(nx, ny, curNode.cnt + 1));
                 }
             }
         }
