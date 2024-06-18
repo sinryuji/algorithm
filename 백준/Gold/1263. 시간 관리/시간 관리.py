@@ -18,4 +18,4 @@ for i in times[1:]:
     else:
         answer -= i[0]
 
-print(-1 if answer <= 0 else answer)
+print(-1 if answer < 0 else answer)
