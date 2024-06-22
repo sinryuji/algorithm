@@ -6,7 +6,7 @@ n = int(input())
 nums = list(map(int, input().split()))
 
 answer = []
-for i in range(1, n + 1):
-    answer.insert(len(answer) - nums[i-1], i)
+for i in range(n):
+    answer.insert(i - nums[i], i+1)
 
 print(*answer)
