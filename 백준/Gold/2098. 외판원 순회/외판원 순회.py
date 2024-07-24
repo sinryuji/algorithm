@@ -1,32 +1,33 @@
 import sys
 
+input = sys.stdin.readline
 INF = 1e+9
-n = int(input())
-mat = []
-for i in range(n):
-    mat.append(list(map(int, sys.stdin.readline().split())))
+N = int(input())
+graph = []
+for i in range(N):
+    graph.append(list(map(int, input().split())))
     
-dp = [[None for _ in range(1<<n)] for _ in range(n)]    #모든 방문 가능 경우의 수
-chk = 1
+dp = [[None for _ in range(1 << N)] for _ in range(N)]
+visited = 1
 
-def search(node, chk):
-    if chk==(1<<n)-1:
-        if mat[node][0]!=0:
-            return mat[node][0]
+def dfs(start, visited):
+    if visited == (1 << N) - 1:
+        if graph[start][0] != 0:
+            return graph[start][0]
         else:
             return INF
 
-    if dp[node][chk]!=None: 
-        return dp[node][chk]
+    if dp[start][visited] != None:
+        return dp[start][visited]
 
-    min_value = INF
-    for i in range(1, n):
-        if (mat[node][i]!= 0) and ((chk & (1<<i))==0):    #연결되어 있으며 방문한적 없을때
-            min_value = min(min_value, search(i, chk | (1<<i)) + mat[node][i])
-    dp[node][chk] = min_value
+    min_val = INF
+    for i in range(1, N):
+        if (graph[start][i] != 0) and ((visited & (1 << i)) == 0):
+            min_val = min(min_val, dfs(i, visited | (1 << i)) + graph[start][i])
+    dp[start][visited] = min_val
 
-    return min_value
+    return min_val
 
 
-answer = search(0,chk)
-print(answer)
+answer = dfs(0, visited)
+print(dfs(0, 1))
