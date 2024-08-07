@@ -1,19 +1,17 @@
 #include <string>
 #include <vector>
+#include <sstream>
 
 using namespace std;
 
 vector<string> solution(string my_string) {
     vector<string> answer;
-    
-    string str = "";
-    for (const char& c : my_string) {
-        if (c == ' ') {
-            answer.push_back(str);
-            str = "";
-        } else str.push_back(c);
-    }
-    answer.push_back(str);
+
+    string str;
+    stringstream ss;
+    ss.str(my_string);
+    while(ss >> str)
+        answer.push_back(str);
     
     return answer;
 }
