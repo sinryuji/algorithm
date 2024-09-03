@@ -8,7 +8,11 @@ def solution(seq, k):
     while l <= r:
         if s <= k:
             if s == k:
-                answer.append((l, r))
+                if len(answer) == 0:
+                    answer = [l, r]
+                else:
+                    if r - l < answer[1] - answer[0]:
+                        answer = [l, r]
             r += 1
             if r == length:
                 break
@@ -17,6 +21,4 @@ def solution(seq, k):
             s -= seq[l]
             l += 1
     
-    answer.sort(key = lambda x: (x[1] - x[0], x[0]))
-    
-    return answer[0]
+    return answer
