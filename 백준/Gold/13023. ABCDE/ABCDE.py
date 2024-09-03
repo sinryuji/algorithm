@@ -3,16 +3,16 @@ import sys
 input = sys.stdin.readline
 
 
-def dfs(cur, seen):
-    if len(seen) == 5:
+def dfs(cur, depth):
+    if depth == 5:
         return True
+    visited[cur] = True
 
     for nxt in graph[cur]:
-        if nxt not in seen:
-            seen.append(nxt)
-            if dfs(nxt, seen):
+        if not visited[nxt]:
+            if dfs(nxt, depth + 1):
                 return True
-            seen.pop()
+            visited[nxt] = False
 
     return False
 
@@ -27,7 +27,8 @@ for _ in range(M):
 
 ans = 0
 for i in range(N):
-    if dfs(i, [i]):
+    visited = [False] * N
+    if dfs(i, 1):
         ans = 1
         break
 
