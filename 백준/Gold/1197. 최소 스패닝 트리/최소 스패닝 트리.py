@@ -1,37 +1,38 @@
 import sys
-input = sys.stdin.readline
 
-def find(x):
-    if parent[x] != x:
-        parent[x] = find(parent[x])
-    return parent[x]
+input = sys.stdin.readline
+sys.setrecursionlimit(10 ** 6)
+
+
+def find(n):
+    if parents[n] != n:
+        parents[n] = find(parents[n])
+    return parents[n]
+
 
 def union(a, b):
     a = find(a)
     b = find(b)
+
     if a < b:
-        parent[b] = a
+        parents[b] = a
     else:
-        parent[a] = b
+        parents[a] = b
+
 
 V, E = map(int, input().split())
 edges = []
+
 for _ in range(E):
     edges.append(tuple(map(int, input().split())))
 
-parent = [i for i in range(V + 1)]
-edges.sort(key=lambda x : x[2])
-ans = 0
+edges.sort(key=lambda x: x[2])
+parents = [i for i in range(V + 1)]
 
-for a, b, dist in edges:
-    a = find(a)
-    b = find(b)
-    if a == b:
-        continue
-    ans += dist
-    if a < b:
-        parent[b] = a
-    else:
-        parent[a] = b
+answer = 0
+for a, b, c in edges:
+    if find(a) != find(b):
+        union(a, b)
+        answer += c
 
-print(ans)
+print(answer)
