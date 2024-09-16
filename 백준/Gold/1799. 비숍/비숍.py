@@ -5,19 +5,19 @@ input = sys.stdin.readline
 
 def dfs(x, cnt):
     global ans
-    if ans >= cnt + L - x:
+    if ans >= cnt + (L + 1 - x) // 2:
         return
-    if x == L:
+    if x >= L:
         ans = max(ans, cnt)
         return
 
     for i, j in bishop[x]:
         if not visited[i - j]:
             visited[i - j] = True
-            dfs(x + 1, cnt + 1)
+            dfs(x + 2, cnt + 1)
             visited[i - j] = False
 
-    dfs(x + 1, cnt)
+    dfs(x + 2, cnt)
 
 n = int(input())
 board = [list(map(int, input().split())) for _ in range(n)]
@@ -33,5 +33,8 @@ for i in range(n):
 visited = [False] * L
 ans = 0
 dfs(0, 0)
+tmp = ans
+ans = 0
+dfs(1, 0)
 
-print(ans)
+print(tmp + ans)
