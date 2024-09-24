@@ -9,14 +9,9 @@ def solution(x, y, n):
         cur, cnt = q.popleft()
         if cur == y:
             return cnt
-        if cur + n <= y and not visited[cur + n]:
-            visited[cur + n] = True
-            q.append((cur + n, cnt + 1))
-        if cur * 2 <= y and not visited[cur * 2]:
-            visited[cur * 2] = True
-            q.append((cur * 2, cnt + 1))
-        if cur * 3 <= y and not visited[cur * 3]:
-            visited[cur * 3] = True
-            q.append((cur * 3, cnt + 1))
+        for nxt in [cur + n, cur * 2, cur * 3]:
+            if nxt <= y and not visited[nxt]:
+                visited[nxt] = True
+                q.append((nxt, cnt + 1))
 
     return -1
