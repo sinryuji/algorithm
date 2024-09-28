@@ -1,15 +1,15 @@
 data = input()
 
-stack = []
+remain = 0
 answer = 0
 
 for i in range(len(data)):
     if data[i] == '(':
-        stack.append(data[i])
+        remain += 1
     else:
-        stack.pop()
+        remain -= 1
         if data[i - 1] == '(':
-            answer += len(stack)
+            answer += remain
         else:
             answer += 1
 
