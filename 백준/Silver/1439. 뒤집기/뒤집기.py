@@ -1,14 +1,16 @@
 S = input()
 
-zero, one, idx = 0, 0, 0
-while idx < len(S):
-    if S[idx] == '0':
-        zero += 1
-        while idx < len(S) and S[idx] == '0':
-            idx += 1
-    elif S[idx] == '1':
-        one += 1
-        while idx < len(S) and S[idx] == '1':
-            idx += 1
+zero, one = 0, 0
+if S[0] == '0':
+    zero += 1
+else:
+    one += 1
+
+for i in range(len(S) - 1):
+    if S[i] != S[i + 1]:
+        if S[i + 1] == '0':
+            zero += 1
+        else:
+            one += 1
 
 print(min(zero, one))
