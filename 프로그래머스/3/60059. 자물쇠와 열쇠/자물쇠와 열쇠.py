@@ -1,12 +1,12 @@
 def turn_right(key, M):
     result = []
-    
+
     for i in range(M):
         tmp = []
         for j in range(M):
             tmp.append(key[~j][i])
         result.append(tmp)
-        
+
     return result
 
 def solution(key, lock):
@@ -25,12 +25,13 @@ def solution(key, lock):
                     for y in range(M):
                         a, b = x - M + 1 + i, y - M + 1 + j
                         if 0 <= a < N and 0 <= b < N:
-                            if key[x][y] == 1 and lock[a][b] == 0:
-                                tmp += 1
-                            if key[x][y] == 1 and lock[a][b] == 1:
-                                tmp -= 1
+                            if key[x][y] == 1:
+                                if lock[a][b] == 0:
+                                    tmp += 1
+                                else:
+                                    tmp -= 1
                 if cnt == tmp:
                     return True
         key = turn_right(key, M)
-    
+
     return False
