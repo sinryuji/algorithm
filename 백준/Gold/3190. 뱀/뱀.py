@@ -6,46 +6,41 @@ input = sys.stdin.readline
 N, K = int(input()), int(input())
 apples = []
 for _ in range(K):
-    x, y = map(int, input().split())
-    x -= 1
-    y -= 1
-    apples.append([y, x])
-di = [(1, 0), (0, 1), (-1, 0), (0, -1)]
-
-snake = deque()
-snake.append([0, 0])
-cur_di = 0
-sec = 0
-
+    y, x = map(int, input().split())
+    apples.append((x, y))
 L = int(input())
-change_directions = []
+directions = deque()
 for _ in range(L):
-    X, C = input().split()
-    change_directions.append((int(X), C))
+    x, c = input().rstrip().split()
+    x = int(x)
+    directions.append((x, c))
 
-while(True):
-    sec += 1
-    head = snake[0]
-    next_head = [head[0] + di[cur_di][0], head[1] + di[cur_di][1]]
-    if next_head[0] < 0 or next_head[0] >= N or next_head[1] < 0 or next_head[
-        1] >= N:
+d = [(1, 0), (0, 1), (-1, 0), (0, -1)]
+
+snake = deque([(1, 1)])
+cur = 0
+
+second = 0
+while True:
+    second += 1
+    nx, ny = snake[0][0] + d[cur][0], snake[0][1] + d[cur][1]
+    if nx < 1 or nx > N or ny < 1 or ny > N:
         break
-    if next_head in snake:
+    if (nx, ny) in snake:
         break
-    snake.appendleft(next_head)
-    if next_head in apples:
-        apples.remove(next_head)
+
+    snake.appendleft((nx, ny))
+    
+    if (nx, ny) in apples:
+        apples.remove((nx, ny))
     else:
         snake.pop()
-    if change_directions and sec == change_directions[0][0]:
-        if change_directions[0][1] == 'D':
-            cur_di += 1
+        
+    if directions and directions[0][0] == second:
+        if directions[0][1] == 'L':
+            cur = (cur - 1) % 4
         else:
-            cur_di -= 1
-        if cur_di == 4:
-            cur_di = 0
-        if cur_di == -1:
-            cur_di = 3
-        change_directions.pop(0)
+            cur = (cur + 1) % 4
+        directions.popleft()
 
-print(sec)
+print(second)
