@@ -1,6 +1,6 @@
 import sys
 import copy
-from itertools import permutations
+from itertools import combinations
 from collections import deque
 
 input = sys.stdin.readline
@@ -46,7 +46,7 @@ for y in range(N):
             virus.append((x, y))
     graph.append(line)
 
-per = permutations(empty, 3)
+per = combinations(empty, 3)
 
 di = [(1, 0), (-1, 0), (0, 1), (0, -1)]
 
