@@ -1,52 +1,57 @@
-from collections import deque
+import sys
 import copy
+from itertools import combinations
+from collections import deque
 
-def bfs():
-    global result
-    queue = deque()
+input = sys.stdin.readline
+
+
+def bfs(p, graph, virus):
     tmp = copy.deepcopy(graph)
+    for x, y in p:
+        tmp[y][x] = 1
 
-    for y in range(N):
-        for x in range(M):
-            if tmp[y][x] == 2:
-                queue.append([x, y])           
+    q = deque()
+    for x, y in virus:
+        q.append((x, y))
 
-    while queue:
-        x, y = queue.popleft()
-        for i in range(4):
-            nx = dx[i] + x
-            ny = dy[i] + y
-            if nx >= M or ny >= N or nx < 0 or ny < 0:
-                continue
-            if tmp[ny][nx] == 1 or tmp[ny][nx] == 2:
-                continue
-            tmp[ny][nx] = 2
-            queue.append([nx, ny])
+    while q:
+        x, y = q.popleft()
+        for dx, dy in di:
+            nx, ny = x + dx, y + dy
+            if 0 <= nx < M and 0 <= ny < N and tmp[ny][nx] == 0:
+                tmp[ny][nx] = 2
+                q.append((nx, ny))
 
-    count = 0
+    result = 0
     for y in range(N):
         for x in range(M):
             if tmp[y][x] == 0:
-                count += 1
-    result = max(result, count)
+                result += 1
 
-def make_wall(count):
-    if count == 3:
-        bfs()
-        return
-    for y in range(N):
-        for x in range(M):
-            if graph[y][x] == 0:
-                graph[y][x] = 1
-                make_wall(count+1)
-                graph[y][x] = 0
+    return result
+
 
 N, M = map(int, input().split())
-graph = [list(map(int, input().split())) for _ in range(N)]
-result = 0
-dx = [1, -1, 0, 0]
-dy = [0, 0, 1, -1]
+graph = []
+empty = []
+virus = []
 
-make_wall(0)
+for y in range(N):
+    line = list(map(int, input().split()))
+    for x in range(M):
+        if line[x] == 0:
+            empty.append((x, y))
+        elif line[x] == 2:
+            virus.append((x, y))
+    graph.append(line)
 
-print(result)
+per = combinations(empty, 3)
+
+di = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+
+answer = 0
+for p in per:
+    answer = max(answer, bfs(p, graph, virus))
+
+print(answer)
