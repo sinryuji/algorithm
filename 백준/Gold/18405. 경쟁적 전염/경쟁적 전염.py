@@ -1,21 +1,19 @@
-# https://www.acmicpc.net/problem/18405
-
 import sys
 from collections import deque
 
 input = sys.stdin.readline
 
 N, K = map(int, input().split())
-board = [list(map(int, input().split())) for _ in range(N)]
-S, X, Y = map(int, input().split())
-
+board = []
 q = []
 for y in range(N):
+    board.append(list(map(int, input().split())))
     for x in range(N):
         if board[y][x] > 0:
             q.append((board[y][x], x, y, 0))
-q = deque(sorted(q))
+S, X, Y = map(int, input().split())
 
+q = deque(sorted(q, key=lambda x: x[0]))
 d = [(1, 0), (-1, 0), (0, 1), (0, -1)]
 while q:
     i, x, y, sec = q.popleft()
