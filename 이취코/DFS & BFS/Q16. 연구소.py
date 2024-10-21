@@ -1,3 +1,5 @@
+# https://www.acmicpc.net/problem/14502
+
 import sys
 import copy
 from itertools import combinations
