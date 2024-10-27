@@ -1,14 +1,11 @@
 import sys
-
 input = sys.stdin.readline
 
+def parse(line):
+    name, kor, eng, math = line.split()
+    kor, eng, math = int(kor), int(eng), int(math)
+    return -kor, eng, -math, name
+
 N = int(input())
-score = []
-for _ in range(N):
-    name, a, b, c = input().rstrip().split()
-    score.append([name, int(a), int(b), int(c)])
-
-score.sort(key=lambda x: (-x[1], x[2], -x[3], x[0]))
-
-for name, a, b, c in score:
-    print(name)
+score = [parse(input().rstrip()) for _ in range(N)]
+print(*map(lambda x: x[3], sorted(score)), sep='\n')
