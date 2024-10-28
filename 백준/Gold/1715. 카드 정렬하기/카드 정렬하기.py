@@ -1,17 +1,15 @@
-import sys
-import heapq
+import sys, heapq
 
 input = sys.stdin.readline
 
 N = int(input())
-cards = []
-for _ in range(N):
-    heapq.heappush(cards, (int(input())))
-s = 0
-cnt = 0
-while len(cards) > 1:
-    card1, card2 = heapq.heappop(cards), heapq.heappop(cards)
-    s += card1 + card2
-    heapq.heappush(cards, card1 + card2)
+cards = [int(input()) for _ in range(N)]
 
-print(s)
+heapq.heapify(cards)
+answer = 0
+while len(cards) >= 2:
+    x, y = heapq.heappop(cards), heapq.heappop(cards)
+    answer += x + y
+    heapq.heappush(cards, x + y)
+
+print(answer)
