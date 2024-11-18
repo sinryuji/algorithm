@@ -1,11 +1,18 @@
-m, n = map(int, input().split())
+# https://www.acmicpc.net/problem/1929
 
-n += 1
-a = [True] * n
-for i in range(2, int(n ** 0.5) + 1):
-    if a[i]:
-        for j in range(i * 2, n, i):
-            a[j] = False
-for i in range(m, n):
-    if i > 1 and a[i]:
+import math
+
+M, N = map(int, input().split())
+
+array = [True] * (N + 1)
+
+for i in range(2, int(math.sqrt(N)) + 1):
+    if array[i]:
+        for j in range(i * 2, N + 1, i):
+            array[j] = False
+
+if M == 1:
+    M += 1
+for i in range(M, N + 1):
+    if array[i]:
         print(i)
