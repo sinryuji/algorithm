@@ -6,8 +6,6 @@ sys.setrecursionlimit(10**6)
 
 def dfs(start):
     visited[start] = True
-    dp[start][0] = 0
-    dp[start][1] = 1
 
     for i in graph[start]:
         if not visited[i]:
@@ -24,7 +22,7 @@ for _ in range(N - 1):
     graph[b].append(a)
 
 visited = [False] * (N + 1)
-dp = [[0, 0] for _ in range(N + 1)]
+dp = [[0, 1] for _ in range(N + 1)]
 
-dfs(1)
-print(min(dp[1][0], dp[1][1]))
+dfs(2)
+print(min(dp[2][0], dp[2][1]))
