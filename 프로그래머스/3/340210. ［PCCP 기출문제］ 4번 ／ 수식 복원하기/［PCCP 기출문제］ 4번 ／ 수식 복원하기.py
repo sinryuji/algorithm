@@ -30,10 +30,7 @@ def solution(expressions):
     erased, unerased = [], []
     for ex in expressions:
         sp = list(ex.split())
-        num = int(sp[0][-1])
-        m = max(m, num)
-        num = int(sp[2][-1])
-        m = max(m, num)
+        m = max(max(m, int(sp[0][-1])), int(sp[2][-1]))
         if sp[-1] == 'X':
             erased.append(sp)
         else:
@@ -51,23 +48,16 @@ def solution(expressions):
             if tmp[i] != ans:
                 remove.append(possible[i])
         possible = [i for i in possible if i not in remove]
-        
-    if len(possible) == 1:
-        base = possible[0]
-        for ex in erased:
-            ex[-1] = cal(ex[0], ex[1], ex[2], base)
-            answer.append(' '.join(ex))
-    else:
-        for ex in erased:
-            tmp = set()
-            for base in possible:
-                res = cal(ex[0], ex[1], ex[2], base)
-                tmp.add(cal(ex[0], ex[1], ex[2], base))
-            if len(tmp) > 1:
-                ex[-1] = '?'
-            else:
-                ex[-1] = list(tmp)[0]
-            answer.append(' '.join(ex))
             
-    
+    for ex in erased:
+        tmp = set()
+        for base in possible:
+            res = cal(ex[0], ex[1], ex[2], base)
+            tmp.add(cal(ex[0], ex[1], ex[2], base))
+        if len(tmp) > 1:
+            ex[-1] = '?'
+        else:
+            ex[-1] = list(tmp)[0]
+        answer.append(' '.join(ex))
+        
     return answer
