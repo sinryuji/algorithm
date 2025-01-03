@@ -1,7 +1,8 @@
 def solution(users, emoticons):
-    results = []
+    answer = [0, 0]
 
     def cal(sales):
+        nonlocal answer
         res = [0, 0]
         for user in users:
             s = 0
@@ -12,11 +13,11 @@ def solution(users, emoticons):
                 res[0] += 1
             else:
                 res[1] += s
-        return res
+        answer = max(answer, res)
 
     def dfs(sales, m):
         if len(sales) == m:
-            results.append(cal(sales))
+            cal(sales)
             return
 
         for i in [10, 20, 30, 40]:
@@ -26,6 +27,4 @@ def solution(users, emoticons):
 
     dfs([], len(emoticons))
 
-    results.sort()
-
-    return results[-1]
+    return answer
