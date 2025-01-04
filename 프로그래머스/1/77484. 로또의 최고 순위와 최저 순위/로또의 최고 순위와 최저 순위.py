@@ -10,4 +10,6 @@ def solution(lottos, win_nums):
                     right_cnt += 1
                     break
     
-    return [(6 if right_cnt == 0 and zero_cnt == 0 else 7) - zero_cnt - right_cnt, 6 if right_cnt == 0 else 7 - right_cnt]
+    rate = [6, 6, 5, 4, 3, 2, 1]
+    
+    return [rate[zero_cnt + right_cnt], rate[right_cnt]]
