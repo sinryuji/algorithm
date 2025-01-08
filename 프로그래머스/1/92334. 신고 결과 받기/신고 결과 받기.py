@@ -5,13 +5,13 @@ def solution(id_list, report, k):
     cnt = dict()
     
     for idx, id in enumerate(id_list):
-        reported[id] = set()
+        reported[id] = []
         index[id] = idx
         cnt[id] = 0
 
-    for r in report:
+    for r in set(report):
         a, b = r.split()
-        reported[b].add(a)
+        reported[b].append(a)
         
     for id in id_list:
         if len(reported[id]) >= k:
