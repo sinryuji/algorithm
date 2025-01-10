@@ -26,11 +26,9 @@ def solution(fees, records):
     for car_num, state in cars:
         if state[2] == 'IN':
             state[1] += midnight - state[0]
-        charge = 0
-        print(state[1])
-        if state[1] <= fees[0]:
-            answer.append(fees[1])
-        else:
-            answer.append(fees[1] + math.ceil((state[1] - fees[0]) / fees[2]) * fees[3])
+        fee = fees[1]
+        if state[1] > fees[0]:
+            fee += math.ceil((state[1] - fees[0]) / fees[2]) * fees[3]
+        answer.append(fee)
     
     return answer
