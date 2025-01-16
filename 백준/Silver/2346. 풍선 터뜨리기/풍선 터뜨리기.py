@@ -1,23 +1,23 @@
 import sys
-from collections import deque
 
 input = sys.stdin.readline
 
 N = int(input())
-arr = list(map(int, input().split()))
-deq = deque((i + 1, v) for i, v in enumerate(arr))
-
+cards = list(map(int, input().split()))
+balloons = list(range(1, N + 1))
+idx = 0
 answer = []
-while True:
-    i, v = deq.popleft()
-    answer.append(i)
-    if not deq:
+
+while cards:
+    answer.append(balloons.pop(idx))
+    move = cards.pop(idx)
+
+    if not cards:
         break
-    if v > 0:
-        for _ in range(v-1):
-            deq.append(deq.popleft())
+
+    if move > 0:
+        idx = (idx + move - 1) % len(cards)
     else:
-        for _ in range(-v):
-            deq.appendleft(deq.pop())
+        idx = (idx + move) % len(cards)
 
 print(*answer)
