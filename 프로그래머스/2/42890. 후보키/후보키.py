@@ -1,24 +1,23 @@
-from itertools import combinations
-
-
 def solution(relation):
+    answer = []
     row, col = len(relation), len(relation[0])
-
-    combi = []
-    for i in range(1, col + 1):
-        combi.extend(combinations(range(col), i))
-
-    unique = []
-    for i in combi:
-        tmp = [tuple(student[key] for key in i) for student in relation]
-        print(tmp)
-        if len(set(tmp)) == row:
+    
+    for i in range(1, 1 << col):
+        s = set()
+        for j in range(row):
+            tmp = ''
+            for k in range(col):
+                if i & (1 << k):
+                    tmp += str(relation[j][k])
+            s.add(tmp)
+            
+        if len(s) == row:
             put = True
-            for x in unique:
-                if set(x).issubset(i):
+            for n in answer:
+                if (n & i) == n:
                     put = False
                     break
             if put:
-                unique.append(i)
-
-    return len(unique)
+                answer.append(i)
+    print(answer)
+    return len(answer)
