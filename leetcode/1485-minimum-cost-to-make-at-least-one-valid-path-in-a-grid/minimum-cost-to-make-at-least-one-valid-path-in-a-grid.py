@@ -13,5 +13,8 @@ class Solution:
                 cost = 0 if grid[y][x] == idx + 1 else 1
                 if 0 <= nx < col and 0 <= ny < row and min_cost[y][x] + cost < min_cost[ny][nx]:
                     min_cost[ny][nx] = min_cost[y][x] + cost
-                    q.append((nx, ny))
+                    if cost == 1:
+                        q.append((nx, ny))
+                    else:
+                        q.appendleft((nx, ny))
         return min_cost[row-1][col-1]
