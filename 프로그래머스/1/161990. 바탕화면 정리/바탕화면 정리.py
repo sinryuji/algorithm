@@ -1,13 +1,10 @@
 def solution(wallpaper):
-    row_min = col_min = int(1e9)
-    row_max = col_max = 0
+    row, col = [], []
     
-    for row in range(len(wallpaper)):
-        for col in range(len(wallpaper[0])):
-            if wallpaper[row][col] == '#':
-                row_min = min(row_min, row)
-                col_min = min(col_min, col)
-                row_max = max(row_max, row)
-                col_max = max(col_max, col)
+    for r in range(len(wallpaper)):
+        for c in range(len(wallpaper[0])):
+            if wallpaper[r][c] == '#':
+                row.append(r)
+                col.append(c)
 
-    return [row_min, col_min, row_max + 1, col_max + 1]
+    return [min(row), min(col), max(row) + 1, max(col) + 1]
