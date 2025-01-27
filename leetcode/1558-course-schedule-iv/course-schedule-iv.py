@@ -1,17 +1,17 @@
 class Solution:
-    def bfs(self, graph, start, end):
+    def bfs(self, graph, start):
         q = deque([start])
         visited = [False] * len(graph)
         visited[start] = True
+        result = set()
         while q:
             cur = q.popleft()
-            if cur == end:
-                return True
             for nxt in graph[cur]:
                 if not visited[nxt]:
                     visited[nxt] = True
                     q.append(nxt)
-        return False
+                    result.add(nxt)
+        return result
     
     def checkIfPrerequisite(self, numCourses: int, prerequisites: List[List[int]], queries: List[List[int]]) -> List[bool]:
         graph = [[] for _ in range(numCourses)]
@@ -19,8 +19,15 @@ class Solution:
         for a, b in prerequisites:
             graph[a].append(b)
 
+        enable = [set() for _ in range(numCourses)]
+        for i in range(numCourses):
+            enable[i] = self.bfs(graph, i)
+
         result = []
         for a, b in queries:
-            result.append(self.bfs(graph, a, b))
+            if b in enable[a]:
+                result.append(True)
+            else:
+                result.append(False)
 
         return result
