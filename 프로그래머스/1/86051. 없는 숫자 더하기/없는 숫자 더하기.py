@@ -1,2 +1,2 @@
 def solution(numbers):
-    return sum(set(range(1, 10)) - set(numbers))
+    return sum(range(10)) - sum(numbers)
