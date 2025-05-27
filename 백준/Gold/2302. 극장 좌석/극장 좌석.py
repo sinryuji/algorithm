@@ -7,13 +7,9 @@ M = int(input())
 vips = set(int(input()) for _ in range(M))
 
 dp = [0] * (N + 1)
+dp[0] = 1
 dp[1] = 1
-if N > 1:
-    if 1 in vips or 2 in vips:
-        dp[2] = 1
-    else:
-        dp[2] = 2
-for i in range(3, N + 1):
+for i in range(2, N + 1):
     if i in vips or i - 1 in vips:
         dp[i] = dp[i - 1]
     else:
