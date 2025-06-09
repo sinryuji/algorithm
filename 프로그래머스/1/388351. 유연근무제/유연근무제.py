@@ -14,6 +14,7 @@ def solution(schedules, timelogs, startday):
             time = (time // 100 * 60) + time % 100
             if time - sche > 10:
                 succeed = False
+                break
                 
         if succeed:
             answer += 1
