@@ -1,10 +1,15 @@
+import string
+
 def solution(s, skip, index):
     answer = ''
     
-    alpha = [chr(i) for i in range(ord('a'), ord('z') + 1) if chr(i) not in skip]
+    alpha = set(string.ascii_lowercase)
+    alpha -= set(skip)
+    alpha = sorted(alpha)
+    dic = {c:idx for idx, c in enumerate(alpha)}
     
+    l = len(alpha)
     for c in s:
-        cur = alpha.index(c)
-        answer += alpha[(cur + index) % len(alpha)]
+        answer += alpha[(dic[c] + index) % l]
     
     return answer
