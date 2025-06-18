@@ -1,9 +1,19 @@
 from itertools import combinations
 
-def solution(n, qs, ans):
-    combi = list(combinations(range(1, n + 1), 5))
+def solution(n, q, ans):
+    answer = 0
+    m = len(ans)
+    remove = list(filter(lambda i: ans[i] == 0, range(m)))
     
-    for q, cnt in zip(qs, ans):
-        combi = [c for c in combi if len(set(c) & set(q)) == cnt]
+    lst = [i for i in range(1, n + 1)]
+    for i in remove:
+        lst = list(filter(lambda x: x not in q[i], lst))
     
-    return len(combi)
+    for c in combinations(lst, 5):
+        for i in range(m):
+            if len([j for j in q[i] if j in c]) != ans[i]:
+                break
+        else:
+            answer += 1
+                
+    return answer
