@@ -4,7 +4,7 @@ def solution(n, qs, ans):
     remove_idx = [i for i, val in enumerate(ans) if val == 0]
     remove = set().union(*(qs[idx] for idx in remove_idx))
     
-    lst = list(filter(lambda x: x not in remove, range(1, n + 1)))    
+    lst = [x for x in range(1, n + 1) if x not in remove]
     combi = list(combinations(lst, 5))
     
     for q, cnt in zip(qs, ans):
