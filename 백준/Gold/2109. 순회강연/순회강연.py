@@ -1,18 +1,15 @@
-import sys
+import sys, heapq
 
 input = sys.stdin.readline
 
 n = int(input())
 arr = [tuple(map(int, input().split())) for _ in range(n)]
-arr.sort(key=lambda x: -x[0])
+arr.sort(key=lambda x: x[1])
 
-ans = 0
-reservation = [False] * (10001)
-for a, b in arr:
-    for i in range(b, 0, -1):
-        if not reservation[i]:
-            ans += a
-            reservation[i] = True
-            break
-            
-print(ans)
+heap = []
+for p, d in arr:
+    heapq.heappush(heap, p)
+    if len(heap) > d:
+        heapq.heappop(heap)
+
+print(sum(heap))
