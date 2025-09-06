@@ -3,14 +3,12 @@ import sys
 input = sys.stdin.readline
 
 N = int(input())
-arr = sorted([int(input()) for _ in range(N)])
+arr = sorted([int(input()) for _ in range(N)], reverse=True)
 
-tri = arr[:3]
-ans = sum(tri) if tri[2] < tri[0] + tri[1] else -1
-for length in arr[3:]:
-    tri.pop(0)
-    tri.append(length)
-    if tri[2] < tri[0] + tri[1]:
-        ans = sum(tri)
+ans = -1
+for i in range(N - 2):
+    if arr[i] < arr[i + 1] + arr[i + 2]:
+        ans = arr[i] + arr[i + 1] + arr[i + 2]
+        break
 
 print(ans)
