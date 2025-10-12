@@ -1,20 +1,25 @@
 import sys
 from itertools import permutations
-import copy
 
 input = sys.stdin.readline
 
 def roll(arr, r, c, s):
-    tmp = [row[:] for row in arr]
-    for a in range(1, s):
-        for x in range(c - a + 1, c + a + 1):
-            arr[r - a][x] = tmp[r - a][x - 1]
-        for y in range(r - a + 1, r + a + 1):
-            arr[y][c + a] = tmp[y - 1][c + a]
-        for x in range(c + a - 1, c - a - 1, -1):
-            arr[r + a][x] = tmp[r + a][x + 1]
-        for y in range(r + a - 1, r - a - 1, -1):
-            arr[y][c - a] = tmp[y + 1][c - a]
+    for layer in range(1, s):
+        r1, r2 = r - layer, r + layer
+        c1, c2 = c - layer, c + layer
+
+        tmp = arr[r1][c1]
+
+        for i in range(r1, r2):
+            arr[i][c1] = arr[i + 1][c1]
+        for i in range(c1, c2):
+            arr[r2][i] = arr[r2][i + 1]
+        for i in range(r2, r1, -1):
+            arr[i][c2] = arr[i - 1][c2]
+        for i in range(c2, c1, -1):
+            arr[r1][i] = arr[r1][i - 1]
+
+        arr[r1][c1 + 1] = tmp
 
 N, M, K = map(int, input().split())
 arr = [list(map(int, input().split())) for _ in range(N)]
