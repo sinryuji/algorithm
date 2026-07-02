@@ -1,53 +1,53 @@
 class Solution {
 public:
-    static constexpr int dirs[4][2] = {{1, 0}, {0, 1}, {-1, 0},{0, -1}};
+    static constexpr int dirs[4][2] = {
+        {1,0},
+        {0,1},
+        {-1,0},
+        {0,-1}
+    };
 
     bool findSafeWalk(vector<vector<int>>& grid, int health) {
 
         int r = grid.size();
         int c = grid[0].size();
 
-        vector<vector<int>> best(r, vector<int>(c, -1));
+        const int INF = 1e9;
 
-        queue<tuple<int,int,int>> q;
+        vector<vector<int>> dist(r, vector<int>(c, INF));
 
-        if (grid[0][0])
-            health--;
+        deque<pair<int,int>> dq;
 
-        q.push({0,0,health});
+        dist[0][0] = grid[0][0];
+        dq.push_front({0,0});
 
-        while (!q.empty()) {
+        while (!dq.empty()) {
 
-            auto [x,y,h] = q.front();
-            q.pop();
-
-            if (h <= 0)
-                continue;
-
-            if (best[y][x] >= h)
-                continue;
-
-            best[y][x] = h;
-
-            if (y == r-1 && x == c-1)
-                return true;
+            auto [y,x] = dq.front();
+            dq.pop_front();
 
             for (auto &d : dirs) {
 
-                int nx = x + d[0];
                 int ny = y + d[1];
+                int nx = x + d[0];
 
-                if (0 <= nx && nx < c &&
-                    0 <= ny && ny < r) {
+                if (ny < 0 || ny >= r || nx < 0 || nx >= c)
+                    continue;
 
-                    if (grid[ny][nx])
-                        q.push({nx, ny, h-1});
-                    else
-                        q.push({nx, ny, h});
-                }
+                int nd = dist[y][x] + grid[ny][nx];
+
+                if (nd >= dist[ny][nx])
+                    continue;
+
+                dist[ny][nx] = nd;
+
+                if (grid[ny][nx] == 0)
+                    dq.push_front({ny,nx});
+                else
+                    dq.push_back({ny,nx});
             }
         }
 
-        return false;
+        return dist[r-1][c-1] < health;
     }
 };
